@@ -9,6 +9,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+
+//app mock接口
 const express = require('express')
 const app = express()
 var appData = require('../data.json')
@@ -35,6 +37,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno:0,
           seller:seller
+        })
+      }),
+      app.get('/api/goods',(req,res)=>{
+        res.json({
+          errno:0,
+          goods:goods
+        })
+      }),
+      app.get('/api/ratings',(req,res)=>{
+        res.json({
+          errno:0,
+          goods:ratings
         })
       })
     },

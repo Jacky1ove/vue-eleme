@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <v-header></v-header>
+      <v-header :seller="seller"></v-header>
     </div>
     <div class="tab">
       <div class="tab-item">
@@ -14,17 +14,30 @@
         <router-link tag="a" to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
   </div>
 </template>
 
 <script>
 import header from './components/header/header.vue'
+const responseNo = 0
 export default {
   name: 'App',
   components:{
     'v-header':header//注册组件通常用'v-' + name来命名
-  }
+  },
+  data(){
+    return {
+      seller:{}
+    }
+  },
+  created() {
+    this.$http.get('/api/seller').then(response => {
+      if(response.data.errno === responseNo){
+        this.seller = response.data.seller
+      }
+    })
+  },
 }
 </script>
 
@@ -47,7 +60,7 @@ export default {
           font-size: 14px;
           color: rgb(77,85,93);
         }
-        
+
         .active{
           color: rgb(240, 20, 20)
         }
@@ -55,4 +68,3 @@ export default {
     }
   }
 </style>
- 
